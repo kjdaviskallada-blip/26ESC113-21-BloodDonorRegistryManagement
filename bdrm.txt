@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <string.h>
+
+// Maximum number of donors
+#define MAX 100
+
+// Structure to store donor details
+struct Donor
+{
+    int sno;
+    char name[50];
+    char bloodgroup[10];
+    char phone[15];
+};
+
+// Main Function
+int main()
+{
+    // Declare variables
+    struct Donor d[MAX];
+    int count = 0;
+    int choice;
+    int searchno;
+    int found;
+    int i;
+
+    // Display menu repeatedly
+    do
+    {
+        printf("\n===== BLOOD DONOR REGISTRY =====\n");
+        printf("1. Add New Donor\n");
+        printf("2. View All Donors\n");
+        printf("3. Search Donor by S.No.\n");
+        printf("4. Exit\n");
+
+        // Input user choice
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        // Process the selected option
+        switch(choice)
+        {
+            // Option 1: Add New Donor
+            case 1:
+
+                // Check storage availability
+                if(count < MAX)
+                {
+                    d[count].sno = count + 1;
+
+                    // Input donor details
+                    printf("Enter donor name: ");
+                    scanf(" %49[^\n]", d[count].name);
+
+                    printf("Enter blood group: ");
+                    scanf("%9s", d[count].bloodgroup);
+
+                    printf("Enter phone number: ");
+                    scanf("%14s", d[count].phone);
+
+                    // Update donor count
+                    count++;
+
+                    // Display confirmation
+                    printf("Donor added successfully!\n");
+                    printf("Serial Number: %d\n", count);
+                }
+                else
+                {
+                    printf("Donor storage is full!\n");
+                }
+
+                break;
+
+            // Option 2: View All Donors
+            case 2:
+
+                // Check whether records exist
+                if(count == 0)
+                {
+                    printf("No donor records found!\n");
+                }
+                else
+                {
+                    // Display all donor records
+                    printf("\n===== DONOR DETAILS =====\n");
+
+                    for(i = 0; i < count; i++)
+                    {
+                        printf("\nSerial Number: %d\n", d[i].sno);
+                        printf("Name: %s\n", d[i].name);
+                        printf("Blood Group: %s\n", d[i].bloodgroup);
+                        printf("Phone: %s\n", d[i].phone);
+                    }
+                }
+
+                break;
+
+            // Option 3: Search Donor
+            case 3:
+
+                // Input serial number
+                printf("Enter donor S.No. to search: ");
+                scanf("%d", &searchno);
+
+                // Initialize search flag
+                found = 0;
+
+                // Search donor records
+                for(i = 0; i < count; i++)
+                {
+                    if(d[i].sno == searchno)
+                    {
+                        // Display matching donor details
+                        printf("\nDonor Found!\n");
+                        printf("Serial Number: %d\n", d[i].sno);
+                        printf("Name: %s\n", d[i].name);
+                        printf("Blood Group: %s\n", d[i].bloodgroup);
+                        printf("Phone: %s\n", d[i].phone);
+
+                        found = 1;
+                        break;
+                    }
+                }
+
+                // Display search result
+                if(found == 0)
+                {
+                    printf("Donor not found!\n");
+                }
+
+                break;
+
+            // Option 4: Exit
+            case 4:
+
+                // Display exit message
+                printf("Thank you for using Blood Donor Registry!\n");
+
+                break;
+
+            // Handle invalid choices
+            default:
+
+                printf("Invalid choice! Please try again.\n");
+        }
+
+    } while(choice != 4);
+
+    // Terminate program
+    return 0;
+}
